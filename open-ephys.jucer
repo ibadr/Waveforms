@@ -74,23 +74,23 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="open-ephys" binaryPath="Builds\VisualStudio2012\Debug\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x86"
                        postbuildCommand="copy &quot;..\..\Resources\DLLs\*.dll&quot; &quot;$(OutDir)&quot;"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="open-ephys" binaryPath="Builds\VisualStudio2012\Release\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x86"
                        postbuildCommand="copy &quot;..\..\Resources\DLLs\*.dll&quot; &quot;$(OutDir)&quot;"/>
         <CONFIGURATION name="Debug64" winWarningLevel="2" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="open-ephys" binaryPath="Builds\VisualStudio2012\Debug64\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x64"
                        postbuildCommand="copy &quot;..\..\Resources\DLLs\Win64\*.dll&quot; &quot;$(OutDir)&quot;"/>
         <CONFIGURATION name="Release64" winWarningLevel="2" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="open-ephys" binaryPath="Builds\VisualStudio2012\Release64\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x64"
                        postbuildCommand="copy &quot;..\..\Resources\DLLs\Win64\*.dll&quot; &quot;$(OutDir)&quot;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -116,26 +116,26 @@
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="1" optimisation="1" targetName="open-ephys" binaryPath="Builds\VisualStudio2013\Debug\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x86"
                        wholeProgramOptimisation="1" postbuildCommand="copy /Y &quot;..\..\Resources\DLLs\VS2013\*.dll&quot; &quot;$(OutDir)&quot;"
                        fastMath="1"/>
         <CONFIGURATION name="Release" winWarningLevel="4" generateManifest="1" winArchitecture="32-bit"
                        isDebug="0" optimisation="3" targetName="open-ephys" binaryPath="Builds\VisualStudio2013\Release\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x86&#10;../../Resources/windows-libs/ZeroMQ/lib_x86&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x86"
                        postbuildCommand="copy /Y &quot;..\..\Resources\DLLs\VS2013\*.dll&quot; &quot;$(OutDir)&quot;"
                        fastMath="1"/>
         <CONFIGURATION name="Debug64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="1" optimisation="1" targetName="open-ephys" binaryPath="Builds\VisualStudio2013\x64\Debug64\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x64"
                        wholeProgramOptimisation="1" postbuildCommand="copy /Y &quot;..\..\Resources\DLLs\VS2013-x64\*.dll&quot; &quot;$(OutDir)&quot;"
                        fastMath="1"/>
         <CONFIGURATION name="Release64" winWarningLevel="4" generateManifest="1" winArchitecture="x64"
                        isDebug="0" optimisation="3" targetName="open-ephys" binaryPath="Builds\VisualStudio2013\x64\Release64\bin"
-                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include"
-                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64"
+                       headerPath="../../Resources/windows-libs/HDF5/include&#10;../../Resources/windows-libs/ZeroMQ/include&#10;../../Resources/windows-libs/WaveFormsSDK/include"
+                       libraryPath="../../Resources/windows-libs/HDF5/lib/x64&#10;../../Resources/windows-libs/ZeroMQ/lib_x64&#10;../../Resources/windows-libs/WaveFormsSDK/lib/x64"
                        postbuildCommand="copy /Y &quot;..\..\Resources\DLLs\VS2013-x64\*.dll&quot; &quot;$(OutDir)&quot;"
                        fastMath="1"/>
       </CONFIGURATIONS>
@@ -295,6 +295,15 @@
               file="Source/Audio/AudioComponent.h"/>
       </GROUP>
       <GROUP id="yQmqZWk" name="Processors">
+        <GROUP id="{3FCFBFDA-848D-6B59-5F37-E3D1F43D54DF}" name="AnalogDiscov">
+          <FILE id="detT9D" name="AnalogDiscov.cpp" compile="1" resource="0"
+                file="Source/Processors/AnalogDiscov/AnalogDiscov.cpp"/>
+          <FILE id="IKFygn" name="AnalogDiscov.h" compile="0" resource="0" file="Source/Processors/AnalogDiscov/AnalogDiscov.h"/>
+          <FILE id="bekcJC" name="AnalogDiscovEditor.cpp" compile="1" resource="0"
+                file="Source/Processors/AnalogDiscov/AnalogDiscovEditor.cpp"/>
+          <FILE id="Ya6bHH" name="AnalogDiscovEditor.h" compile="0" resource="0"
+                file="Source/Processors/AnalogDiscov/AnalogDiscovEditor.h"/>
+        </GROUP>
         <GROUP id="{6E059BEC-4A8F-BCDA-1F91-9B22C6CBF2E4}" name="Rectifier">
           <FILE id="oMFsRh" name="Rectifier.cpp" compile="1" resource="0" file="Source/Processors/Rectifier/Rectifier.cpp"/>
           <FILE id="NdIO5Q" name="Rectifier.h" compile="0" resource="0" file="Source/Processors/Rectifier/Rectifier.h"/>

@@ -44,6 +44,7 @@
 #include "../ArduinoOutput/ArduinoOutput.h"
 #include "../PulsePalOutput/PulsePalOutput.h"
 #include "../SerialInput/SerialInput.h"
+#include "../AnalogDiscov/AnalogDiscov.h"
 #include "../MessageCenter/MessageCenter.h"
 #include "../RecordControl/RecordControl.h"
 #include "../Splitter/Splitter.h"
@@ -549,6 +550,11 @@ GenericProcessor* ProcessorGraph::createProcessorFromDescription(String& descrip
         {
             processor = new SerialInput();
             std::cout << "Creating a new serial port input." << std::endl;
+		}
+		else if (subProcessorType.equalsIgnoreCase("Analog Discovery"))
+		{
+			processor = new AnalogDiscov();
+			std::cout << "Creating a new Analog Discovery input." << std::endl;
 		}
 		else if (subProcessorType.equalsIgnoreCase("Network Events"))
 		{
