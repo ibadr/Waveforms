@@ -24,8 +24,10 @@
 #ifndef __ANALOGDISCOV_H__
 #define __ANALOGDISCOV_H__
 
-#ifdef _WIN32
-#include <Windows.h>
+#ifdef WIN32
+#include "../../Resources/windows-libs/WaveFormsSDK/inc/dwf.h"
+#else
+#include <digilent/waveforms/dwf.h>
 #endif
 
 #include "../../../JuceLibraryCode/JuceHeader.h"
@@ -103,7 +105,12 @@ public:
 private:
 
 	int64 timestamp;
-	int currentNumChannels;
+	int _currentNumChannels;
+
+	HDWF _hdwf;
+	STS _sts;
+	double* _rgdSamples;
+	int _cBufSamples;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalogDiscov);
 };
