@@ -115,7 +115,7 @@
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalLibraryDirectories>../../Resources/windows-libs/HDF5/lib/x86;../../Resources/windows-libs/ZeroMQ/lib_x86;../../Resources/windows-libs/WaveFormsSDK/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;dwf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -163,7 +163,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalLibraryDirectories>../../Resources/windows-libs/HDF5/lib/x86;../../Resources/windows-libs/ZeroMQ/lib_x86;../../Resources/windows-libs/WaveFormsSDK/lib/x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;dwf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -208,8 +208,7 @@
       <ProgramDatabaseFile>$(IntDir)\open-ephys.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>../../Resources/windows-libs/HDF5/lib/x64;../../Resources/windows-libs/ZeroMQ/lib_x64;../../Resources/windows-libs/WaveFormsSDK/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware> <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;dwf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
     </Link>
     <Bscmake>
@@ -257,7 +256,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <AdditionalLibraryDirectories>../../Resources/windows-libs/HDF5/lib/x64;../../Resources/windows-libs/ZeroMQ/lib_x64;../../Resources/windows-libs/WaveFormsSDK/lib/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
-      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>setupapi.lib;opengl32.lib;glu32.lib;hdf5.lib;hdf5_cpp.lib;libzmq-v120-mt-4_0_4.lib;dwf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
