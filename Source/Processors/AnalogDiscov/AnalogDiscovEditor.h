@@ -63,11 +63,6 @@ private:
     // Button that reloads device list
     ScopedPointer<UtilityButton> refreshButton;
 
-    // List of all available dvices
-    ScopedPointer<ComboBox> deviceList;
-    // List of all available baudrates.
-    ScopedPointer<ComboBox> baudrateList;
-
     // Parent node
     AnalogDiscov* node;
 
