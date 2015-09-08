@@ -55,6 +55,7 @@
 #include "../PSTH/PeriStimulusTimeHistogramNode.h"
 #include "../CAR/CAR.h"
 #include "../Rectifier/Rectifier.h"
+#include "../UnityProcessor/UnityProcessor.h"
 
     
 ProcessorGraph::ProcessorGraph() : currentNodeId(100)
@@ -583,6 +584,11 @@ GenericProcessor* ProcessorGraph::createProcessorFromDescription(String& descrip
             std::cout << "Creating a new rectifier node." << std::endl;
             processor = new Rectifier();
         }
+		else if (subProcessorType.equalsIgnoreCase("Unity Processor"))
+		{
+			std::cout << "Creating a new unity processor node." << std::endl;
+			processor = new UnityProcessor();
+		}
         else if (subProcessorType.equalsIgnoreCase("Spike Detector"))
         {
             std::cout << "Creating a new spike detector." << std::endl;

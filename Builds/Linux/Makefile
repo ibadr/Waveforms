@@ -55,6 +55,7 @@ OBJECTS := \
   $(OBJDIR)/AccessClass_de9602d5.o \
   $(OBJDIR)/PracticalSocket_2574ecc8.o \
   $(OBJDIR)/AudioComponent_521bd9c9.o \
+  $(OBJDIR)/UnityProcessor_7e697aea.o \
   $(OBJDIR)/AnalogDiscov_ebc47eca.o \
   $(OBJDIR)/AnalogDiscovEditor_5eadda17.o \
   $(OBJDIR)/Rectifier_21cc94b6.o \
@@ -227,6 +228,11 @@ $(OBJDIR)/PracticalSocket_2574ecc8.o: ../../Source/Network/PracticalSocket.cpp
 $(OBJDIR)/AudioComponent_521bd9c9.o: ../../Source/Audio/AudioComponent.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling AudioComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/UnityProcessor_7e697aea.o: ../../Source/Processors/UnityProcessor/UnityProcessor.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling UnityProcessor.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/AnalogDiscov_ebc47eca.o: ../../Source/Processors/AnalogDiscov/AnalogDiscov.cpp

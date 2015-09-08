@@ -32,6 +32,9 @@
     <Filter Include="open-ephys\Source\Processors">
       <UniqueIdentifier>{3DDEC88C-BAA5-2DDA-A59F-0FB74070AB82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="open-ephys\Source\Processors\UnityProcessor">
+      <UniqueIdentifier>{53537D72-2683-996B-DBDC-AF573462479F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="open-ephys\Source\Processors\AnalogDiscov">
       <UniqueIdentifier>{108F5C93-1416-56D4-E93F-EA0C1C10B7C9}</UniqueIdentifier>
     </Filter>
@@ -67,6 +70,9 @@
     </Filter>
     <Filter Include="open-ephys\Source\Processors\EventDetector">
       <UniqueIdentifier>{FDD5B79A-1AA4-7745-BB6E-E09A6DFC328E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="open-ephys\Source\Processors\EventNode">
+      <UniqueIdentifier>{3BDCC6CD-7B1F-ED1C-7442-F2B0CD1A86C8}</UniqueIdentifier>
     </Filter>
     <Filter Include="open-ephys\Source\Processors\FileReader">
       <UniqueIdentifier>{59F490B2-F5D9-601B-01AE-368632E3C9D7}</UniqueIdentifier>
@@ -440,9 +446,6 @@
     <Filter Include="Juce Library Code">
       <UniqueIdentifier>{8B4D1BAA-6DB4-CAEC-A0FA-271F354D5C61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="open-ephys\Source\Processors\EventDetector\EventNode">
-      <UniqueIdentifier>{3BDCC6CD-7B1F-ED1C-7442-F2B0CD1A86C8}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\CoreServices.cpp">
@@ -456,6 +459,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Audio\AudioComponent.cpp">
       <Filter>open-ephys\Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.cpp">
+      <Filter>open-ephys\Source\Processors\UnityProcessor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.cpp">
       <Filter>open-ephys\Source\Processors\AnalogDiscov</Filter>
@@ -593,10 +599,10 @@
       <Filter>open-ephys\Source\Processors\EventDetector</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Processors\EventNode\EventNode.cpp">
-      <Filter>open-ephys\Source\Processors\EventDetector\EventNode</Filter>
+      <Filter>open-ephys\Source\Processors\EventNode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Processors\EventNode\EventNodeEditor.cpp">
-      <Filter>open-ephys\Source\Processors\EventDetector\EventNode</Filter>
+      <Filter>open-ephys\Source\Processors\EventNode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Processors\FileReader\KwikFileSource.cpp">
       <Filter>open-ephys\Source\Processors\FileReader</Filter>
@@ -2061,6 +2067,9 @@
     <ClInclude Include="..\..\Source\Audio\AudioComponent.h">
       <Filter>open-ephys\Source\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.h">
+      <Filter>open-ephys\Source\Processors\UnityProcessor</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.h">
       <Filter>open-ephys\Source\Processors\AnalogDiscov</Filter>
     </ClInclude>
@@ -2215,10 +2224,10 @@
       <Filter>open-ephys\Source\Processors\EventDetector</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Processors\EventNode\EventNode.h">
-      <Filter>open-ephys\Source\Processors\EventDetector\EventNode</Filter>
+      <Filter>open-ephys\Source\Processors\EventNode</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Processors\EventNode\EventNodeEditor.h">
-      <Filter>open-ephys\Source\Processors\EventDetector\EventNode</Filter>
+      <Filter>open-ephys\Source\Processors\EventNode</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Processors\FileReader\KwikFileSource.h">
       <Filter>open-ephys\Source\Processors\FileReader</Filter>
