@@ -98,7 +98,7 @@ void AnalogDiscov::process(AudioSampleBuffer& buffer, MidiBuffer& events)
 		// forward the data to the outBuffer
 		float* outBuffer = buffer.getWritePointer(ch, 0);
 		for (int k = 0; k < _cBufSamples; k++)
-			*(outBuffer + k) = (float)_rgdSamples[k] * 1e3f; // in mV by default
+			*(outBuffer + k) = (float)_rgdSamples[k];
 	}
 	timestamp += _cBufSamples;
 
