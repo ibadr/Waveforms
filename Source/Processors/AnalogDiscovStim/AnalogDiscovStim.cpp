@@ -22,22 +22,40 @@
 */
 
 #include "AnalogDiscovStim.h"
-#include "../Channel/Channel.h"
+#include "../AnalogDiscov/AnalogDiscovManager.h"
 #include "../Visualization/SpikeObject.h"
 
 #include <stdio.h>
 
 
 AnalogDiscovStim::AnalogDiscovStim()
-    : GenericProcessor("Analog Discov Stim")
+	: GenericProcessor("Analog Discov Stim"), _isReady(false)
 {
-
+	_manager = AnalogDiscovManager::uniqueInst();
+	_isReady=_manager->registerClientForDevice(0);
 }
 
 AnalogDiscovStim::~AnalogDiscovStim()
 {
-
+	_manager->unregisterClientForDevice(0);
 }
+
+bool AnalogDiscovStim::isReady()
+{
+	HDWF hdwf = _manager->currDeviceHdwf();
+	BOOL ret;
+	ret=FDwfAnalogOutNodeEnableSet(hdwf, 0, AnalogOutNodeCarrier, true);
+	// set sine function
+	ret=FDwfAnalogOutNodeFunctionSet(hdwf, 0, AnalogOutNodeCarrier, funcSine);
+	// 80 Hz
+	ret=FDwfAnalogOutNodeFrequencySet(hdwf, 0, AnalogOutNodeCarrier, 80.0);
+	// 1.41V amplitude (1Vrms), 2.82V pk2pk
+	ret=FDwfAnalogOutNodeAmplitudeSet(hdwf, 0, AnalogOutNodeCarrier, 1.41);
+	// start signal generation
+	ret=FDwfAnalogOutConfigure(hdwf, 0, true);
+	return _isReady && ret>0? true:false;
+}
+
 
 bool AnalogDiscovStim::enable()
 {
@@ -46,6 +64,8 @@ bool AnalogDiscovStim::enable()
 
 bool AnalogDiscovStim::disable()
 {
+	HDWF hdwf = _manager->currDeviceHdwf();
+	FDwfAnalogOutConfigure(hdwf, 0, false);
     return true;
 }
 

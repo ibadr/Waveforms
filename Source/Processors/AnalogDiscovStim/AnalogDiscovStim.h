@@ -27,6 +27,8 @@
 #include "../../JuceLibraryCode/JuceHeader.h"
 #include "../GenericProcessor/GenericProcessor.h"
 
+class AnalogDiscovManager;
+
 /**
 
  Takes in MidiEvents and extracts SpikeObjects from the MidiEvent buffers, then sends 
@@ -52,10 +54,13 @@ public:
 
     void handleEvent(int, MidiMessage&, int);
 
+	bool isReady();
     bool enable();
     bool disable();
 
 private:
+	AnalogDiscovManager * _manager;
+	bool _isReady;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalogDiscovStim);
 
