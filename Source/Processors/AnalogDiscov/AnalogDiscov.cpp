@@ -29,79 +29,59 @@
 #include <stdlib.h>
 
 AnalogDiscov::AnalogDiscov()
-	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _devOpen(false), 
+	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _devOpen(false),
 	_fs(10000.0f), _bv(950.57f), _rgdSamples(0)
 {
+	_manager = AnalogDiscovManager::uniqueInst();
 
 }
 
 AnalogDiscov::~AnalogDiscov()
 {
 	// close the device
-	FDwfDeviceClose(_hdwf); _devOpen = false;
+	_manager->unregisterClientForDevice(_devId);
 	delete[] _rgdSamples;
-}
-
-bool AnalogDiscov::openDevice(int id)
-{
-	bool isSuccess = false;
-	if (id < 0) {
-		return isSuccess;
-	}
-	
-
-	// attempt to open device
-	if (_devOpen) // already open under our control
-	{
-		isSuccess = true;
-		return isSuccess;
-	}
-
-	BOOL isInUse;
-	FDwfEnumDeviceIsOpened(_devId, &isInUse);
-	if (isInUse) {
-		CoreServices::sendStatusMessage("Device is already in use! Please close other programs that are using the selected device.");
-		return isSuccess;
-	}
-	FDwfDeviceOpen(_devId, &_hdwf);
-	_devOpen = true; isSuccess = true;
-	return isSuccess;
 }
 
 void AnalogDiscov::setDeviceId(int id)
 {
 	_devId = id; 
-		
-	int cChannel;
-	openDevice(_devId); // attempt to open device
+
+	if (!_devOpen)
+		_devOpen=_manager->registerClientForDevice(_devId); // open the device and register a new client
 
 	if (_devOpen) // already open under our control
 	{
 		// get the number of analog in channels
-		FDwfAnalogInChannelCount(_hdwf, &cChannel);
+		int cChannel;
+		FDwfAnalogInChannelCount(_manager->currDeviceHdwf(), &cChannel);
 		_currentNumChannels = cChannel;
 		// enable channels
 		for (int c = 0; c < cChannel; c++){
-			FDwfAnalogInChannelEnableSet(_hdwf, c, true);
+			FDwfAnalogInChannelEnableSet(_manager->currDeviceHdwf(), c, true);
 		}
 	}
 }
 
 bool AnalogDiscov::enable()
 {
-	// set sample rate and filter
-	FDwfAnalogInFrequencySet(_hdwf, getDefaultSampleRate());
-	FILTER filter = filterAverage;
-	FDwfAnalogInChannelFilterSet(_hdwf, -1, filter);
+	HDWF hdwf = _manager->currDeviceHdwf();
+	if (hdwf > 0) {
+		// set sample rate and filter
+		FDwfAnalogInFrequencySet(hdwf, getDefaultSampleRate());
+		FILTER filter = filterAverage;
+		FDwfAnalogInChannelFilterSet(hdwf, -1, filter);
 
-	// get the maximum buffer size
-	FDwfAnalogInBufferSizeInfo(_hdwf, NULL, &_cBufSamples);
-	_cBufSamples = _cBufSamples>1024 ? 1024 : _cBufSamples; // max buffer size in open-ephys is 1024?
-	FDwfAnalogInBufferSizeSet(_hdwf, _cBufSamples);
+		// get the maximum buffer size
+		FDwfAnalogInBufferSizeInfo(hdwf, NULL, &_cBufSamples);
+		_cBufSamples = _cBufSamples > 1024 ? 1024 : _cBufSamples; // max buffer size in open-ephys is 1024?
+		FDwfAnalogInBufferSizeSet(hdwf, _cBufSamples);
 
-	delete[] _rgdSamples;
-	_rgdSamples = new double[_cBufSamples];
-    return true;
+		delete[] _rgdSamples;
+		_rgdSamples = new double[_cBufSamples];
+		return true;
+	}
+	else { return false; }
 }
 
 bool AnalogDiscov::disable()
@@ -129,16 +109,17 @@ void AnalogDiscov::process(AudioSampleBuffer& buffer, MidiBuffer& events)
 {
 	setTimestamp(events, _timestamp);
 
+	HDWF hdwf = _manager->currDeviceHdwf();
 	// start
-	FDwfAnalogInConfigure(_hdwf, 0, true);
+	FDwfAnalogInConfigure(hdwf, 0, true);
 
 	do{
-		FDwfAnalogInStatus(_hdwf, true, &_sts);
+		FDwfAnalogInStatus(hdwf, true, &_sts);
 	} while (_sts != stsDone);
 
 	// get the samples for each channel
 	for (int ch = 0; ch < _currentNumChannels; ch++){
-		FDwfAnalogInStatusData(_hdwf, ch, _rgdSamples, _cBufSamples);
+		FDwfAnalogInStatusData(hdwf, ch, _rgdSamples, _cBufSamples);
 		// forward the data to the outBuffer
 		float* outBuffer = buffer.getWritePointer(ch, 0);
 		for (int k = 0; k < _cBufSamples; k++)

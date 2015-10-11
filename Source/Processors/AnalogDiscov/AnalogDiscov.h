@@ -34,6 +34,7 @@
 #include "../GenericProcessor/GenericProcessor.h"
 
 #include "AnalogDiscovEditor.h"
+#include "AnalogDiscovManager.h"
 
 /**
 
@@ -85,7 +86,6 @@ public:
 	StringArray devices();
 
 	void setDeviceId(int id);
-	bool openDevice(int id);
 
     /** Defines the functionality of the processor.
      The process method is called every time a new data buffer is available.
@@ -103,12 +103,12 @@ private:
 	int64 _timestamp;
 	int _currentNumChannels;
 	int _devId;
+	AnalogDiscovManager* _manager;
 	bool _devOpen;
 
 	float _fs; // sample rate
 	float _bv; // bitVolts (microvolts / digital unit)
 
-	HDWF _hdwf;
 	STS _sts;
 	double* _rgdSamples;
 	int _cBufSamples;
