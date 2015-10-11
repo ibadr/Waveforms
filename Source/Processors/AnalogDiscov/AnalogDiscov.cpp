@@ -29,7 +29,7 @@
 #include <stdlib.h>
 
 AnalogDiscov::AnalogDiscov()
-	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _devOpen(false),
+	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _devOpen(false), _isReady(false),
 	_fs(10000.0f), _bv(950.57f), _rgdSamples(0)
 {
 	_manager = AnalogDiscovManager::uniqueInst();
@@ -72,6 +72,7 @@ void AnalogDiscov::setDeviceId(int id)
 bool AnalogDiscov::enable()
 {
 	HDWF hdwf = _manager->currDeviceHdwf();
+	_isReady = false;
 	if (hdwf > 0) {
 		BOOL isSuccess = 0;
 		// set sample rate and filter
@@ -86,14 +87,22 @@ bool AnalogDiscov::enable()
 
 		delete[] _rgdSamples;
 		_rgdSamples = new double[_cBufSamples];
-		return isSuccess>0 ? true:false;
+
+		_isReady = isSuccess > 0 ? true : false;
+		return _isReady;
 	}
 	else { return false; }
+}
+
+bool AnalogDiscov::isReady()
+{
+	return enable();
 }
 
 bool AnalogDiscov::disable()
 {
 	delete[] _rgdSamples; _rgdSamples = 0;
+	_isReady = false;
 	return true;
 }
 

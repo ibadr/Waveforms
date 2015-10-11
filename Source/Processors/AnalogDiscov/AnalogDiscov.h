@@ -81,6 +81,9 @@ public:
 	/** Called immediately prior to the start of data acquisition. */
 	bool enable();
 
+	/** If false, data acquisition will not start */
+	bool isReady();
+
 	/** Called immediately after the end of data acquisition. */
 	bool disable();
 
@@ -107,6 +110,7 @@ private:
 	int _devId;
 	AnalogDiscovManager* _manager;
 	bool _devOpen;
+	bool _isReady;
 
 	float _fs; // sample rate
 	float _bv; // bitVolts (microvolts / digital unit)
