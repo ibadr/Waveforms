@@ -70,30 +70,26 @@ public:
 	}
 
 	float getDefaultSampleRate();
+	float getDefaultBitVolts();
+	float getBitVolts(Channel* chan);
 	int getNumHeadstageOutputs();
 	//int getNumEventChannels();
 
-    /**
-     This should only be run by the ProcessorGraph, before acquisition will be started.
+	/** Called immediately prior to the start of data acquisition. */
+	bool enable();
 
-     It tries to open the serial port previsouly specified by the setDevice and setBaudrate setters.
+	/** Called immediately after the end of data acquisition. */
+	bool disable();
 
-     Returns true on success, false if port could not be opened.
-     */
-    bool isReady();
+	/** Returns the list of connected devices */
+	StringArray devices();
 
-    /**
-     Called immediately after the end of data acquisition by the ProcessorGraph.
-
-     It closes the open port serial port.
-     */
-    bool disable();
+	void setDeviceId(int id);
+	bool openDevice(int id);
 
     /** Defines the functionality of the processor.
-
      The process method is called every time a new data buffer is available.
-
-     Adds all the new serial data that is available to the event data buffer.
+     Adds all the new data that is available to the event data buffer.
      */
     void process(AudioSampleBuffer& buffer, MidiBuffer& events);
 
@@ -104,8 +100,13 @@ public:
 
 private:
 
-	int64 timestamp;
+	int64 _timestamp;
 	int _currentNumChannels;
+	int _devId;
+	bool _devOpen;
+
+	float _fs; // sample rate
+	float _bv; // bitVolts (microvolts / digital unit)
 
 	HDWF _hdwf;
 	STS _sts;

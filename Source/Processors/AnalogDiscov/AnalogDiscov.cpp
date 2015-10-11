@@ -29,61 +29,105 @@
 #include <stdlib.h>
 
 AnalogDiscov::AnalogDiscov()
-    : GenericProcessor("Analog Discovery")
+	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _devOpen(false), 
+	_fs(10000.0f), _bv(950.57f), _rgdSamples(0)
 {
-	timestamp = 0;
-	_currentNumChannels = 10;
 
-	int cChannel;
+}
 
-	printf("Open automatically the first available device\n");
-	FDwfDeviceOpen(-1, &_hdwf);
+AnalogDiscov::~AnalogDiscov()
+{
+	// close the device
+	FDwfDeviceClose(_hdwf); _devOpen = false;
+	delete[] _rgdSamples;
+}
 
-	// get the number of analog in channels
-	FDwfAnalogInChannelCount(_hdwf, &cChannel);
-	_currentNumChannels = cChannel;
-
-	// enable channels
-	for (int c = 0; c < cChannel; c++){
-		FDwfAnalogInChannelEnableSet(_hdwf, c, true);
+bool AnalogDiscov::openDevice(int id)
+{
+	bool isSuccess = false;
+	if (id < 0) {
+		return isSuccess;
 	}
-	// set 15V pk2pk input range for all channels
-	//FDwfAnalogInChannelRangeSet(_hdwf, -1, 15);
+	
 
+	// attempt to open device
+	if (_devOpen) // already open under our control
+	{
+		isSuccess = true;
+		return isSuccess;
+	}
+
+	BOOL isInUse;
+	FDwfEnumDeviceIsOpened(_devId, &isInUse);
+	if (isInUse) {
+		CoreServices::sendStatusMessage("Device is already in use! Please close other programs that are using the selected device.");
+		return isSuccess;
+	}
+	FDwfDeviceOpen(_devId, &_hdwf);
+	_devOpen = true; isSuccess = true;
+	return isSuccess;
+}
+
+void AnalogDiscov::setDeviceId(int id)
+{
+	_devId = id; 
+		
+	int cChannel;
+	openDevice(_devId); // attempt to open device
+
+	if (_devOpen) // already open under our control
+	{
+		// get the number of analog in channels
+		FDwfAnalogInChannelCount(_hdwf, &cChannel);
+		_currentNumChannels = cChannel;
+		// enable channels
+		for (int c = 0; c < cChannel; c++){
+			FDwfAnalogInChannelEnableSet(_hdwf, c, true);
+		}
+	}
+}
+
+bool AnalogDiscov::enable()
+{
 	// set sample rate and filter
 	FDwfAnalogInFrequencySet(_hdwf, getDefaultSampleRate());
 	FILTER filter = filterAverage;
 	FDwfAnalogInChannelFilterSet(_hdwf, -1, filter);
 
 	// get the maximum buffer size
-	//FDwfAnalogInBufferSizeInfo(_hdwf, NULL, &_cBufSamples);
-	_cBufSamples = 1024; // max buffer size in open-ephys is 1024?
+	FDwfAnalogInBufferSizeInfo(_hdwf, NULL, &_cBufSamples);
+	_cBufSamples = _cBufSamples>1024 ? 1024 : _cBufSamples; // max buffer size in open-ephys is 1024?
 	FDwfAnalogInBufferSizeSet(_hdwf, _cBufSamples);
 
-	_rgdSamples = new double[_cBufSamples];
-}
-
-AnalogDiscov::~AnalogDiscov()
-{
-	// close the device
-	FDwfDeviceClose(_hdwf);
 	delete[] _rgdSamples;
-}
-
-bool AnalogDiscov::isReady()
-{
+	_rgdSamples = new double[_cBufSamples];
     return true;
 }
 
 bool AnalogDiscov::disable()
 {
+	delete[] _rgdSamples; _rgdSamples = 0;
 	return true;
+}
+
+StringArray AnalogDiscov::devices()
+{
+	StringArray deviceList;
+	int cDevice;
+	char deviceName[32];
+	FDwfEnum(enumfilterDiscovery, &cDevice);
+	for (int i = 0; i < cDevice; i++){
+		// we use 0 based indexing
+		FDwfEnumDeviceName(i, deviceName);
+		deviceList.add(deviceName);
+	}
+	return deviceList;
 }
 
 
 void AnalogDiscov::process(AudioSampleBuffer& buffer, MidiBuffer& events)
 {
-	setTimestamp(events, timestamp);
+	setTimestamp(events, _timestamp);
 
 	// start
 	FDwfAnalogInConfigure(_hdwf, 0, true);
@@ -98,9 +142,9 @@ void AnalogDiscov::process(AudioSampleBuffer& buffer, MidiBuffer& events)
 		// forward the data to the outBuffer
 		float* outBuffer = buffer.getWritePointer(ch, 0);
 		for (int k = 0; k < _cBufSamples; k++)
-			*(outBuffer + k) = (float)_rgdSamples[k];
+			*(outBuffer + k) = (float)_rgdSamples[k]*_bv;
 	}
-	timestamp += _cBufSamples;
+	_timestamp += _cBufSamples;
 
 	setNumSamples(events, _cBufSamples);
 }
@@ -113,7 +157,17 @@ AudioProcessorEditor* AnalogDiscov::createEditor()
 
 float AnalogDiscov::getDefaultSampleRate()
 {
-	return 10000.0f;
+	return _fs;
+}
+
+float AnalogDiscov::getDefaultBitVolts()
+{
+	return _bv;
+}
+
+float AnalogDiscov::getBitVolts(Channel* /*chan*/)
+{
+	return _bv;
 }
 
 int AnalogDiscov::getNumHeadstageOutputs()

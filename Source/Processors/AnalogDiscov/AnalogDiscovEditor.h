@@ -33,7 +33,7 @@
 
 class AnalogDiscov;
 
-class AnalogDiscovEditor : public GenericEditor, public ComboBox::Listener
+class AnalogDiscovEditor : public GenericEditor, public ComboBox::Listener, public Label::Listener
 {
 
 public:
@@ -43,8 +43,11 @@ public:
     /** Button listener callback, called by button when pressed. */
     void buttonEvent(Button* button);
 
-    /** Combobox listener callback, callewd when a combobox is changed. */
+    /** Combobox listener callback, called when a combobox is changed. */
     void comboBoxChanged(ComboBox* box);
+
+	/** Label listener callback, called when a label is changed. */
+	void labelTextChanged(Label* label);
 
     /** Called by processor graph in beginning of the acqusition, disables editor completly. */
     void startAcquisition();
@@ -60,11 +63,20 @@ public:
 
 private:
 
+	// List of all available dvices
+	ScopedPointer<ComboBox> _deviceList;
     // Button that reloads device list
-    ScopedPointer<UtilityButton> refreshButton;
+    ScopedPointer<UtilityButton> _refreshButton;
+	ScopedPointer<Label> _sampleRateLabel;
+	ScopedPointer<Label> _uVperUnitLabel;
+
+	ScopedPointer<Label> _sampleRateValue;
+	ScopedPointer<Label> _uVperUnitValue;
 
     // Parent node
-    AnalogDiscov* node;
+    AnalogDiscov* _node;
+
+	void initEditor();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalogDiscovEditor);
 };
