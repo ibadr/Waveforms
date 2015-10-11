@@ -463,6 +463,9 @@
     <ClCompile Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.cpp">
       <Filter>open-ephys\Source\Processors\UnityProcessor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovManager.cpp">
+      <Filter>open-ephys\Source\Processors\AnalogDiscov</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.cpp">
       <Filter>open-ephys\Source\Processors\AnalogDiscov</Filter>
     </ClCompile>
@@ -2069,6 +2072,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.h">
       <Filter>open-ephys\Source\Processors\UnityProcessor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovManager.h">
+      <Filter>open-ephys\Source\Processors\AnalogDiscov</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.h">
       <Filter>open-ephys\Source\Processors\AnalogDiscov</Filter>

@@ -302,6 +302,10 @@
                 file="Source/Processors/UnityProcessor/UnityProcessor.h"/>
         </GROUP>
         <GROUP id="{3FCFBFDA-848D-6B59-5F37-E3D1F43D54DF}" name="AnalogDiscov">
+          <FILE id="qku7fo" name="AnalogDiscovManager.h" compile="0" resource="0"
+                file="Source/Processors/AnalogDiscov/AnalogDiscovManager.h"/>
+          <FILE id="igMWTV" name="AnalogDiscovManager.cpp" compile="1" resource="0"
+                file="Source/Processors/AnalogDiscov/AnalogDiscovManager.cpp"/>
           <FILE id="detT9D" name="AnalogDiscov.cpp" compile="1" resource="0"
                 file="Source/Processors/AnalogDiscov/AnalogDiscov.cpp"/>
           <FILE id="IKFygn" name="AnalogDiscov.h" compile="0" resource="0" file="Source/Processors/AnalogDiscov/AnalogDiscov.h"/>

@@ -272,6 +272,7 @@
     <ClCompile Include="..\..\Source\Network\PracticalSocket.cpp"/>
     <ClCompile Include="..\..\Source\Audio\AudioComponent.cpp"/>
     <ClCompile Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovManager.cpp"/>
     <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.cpp"/>
     <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovEditor.cpp"/>
     <ClCompile Include="..\..\Source\Processors\Rectifier\Rectifier.cpp"/>
@@ -1522,6 +1523,7 @@
     <ClInclude Include="..\..\Source\Network\PracticalSocket.h"/>
     <ClInclude Include="..\..\Source\Audio\AudioComponent.h"/>
     <ClInclude Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.h"/>
+    <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovManager.h"/>
     <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.h"/>
     <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovEditor.h"/>
     <ClInclude Include="..\..\Source\Processors\Rectifier\Rectifier.h"/>
