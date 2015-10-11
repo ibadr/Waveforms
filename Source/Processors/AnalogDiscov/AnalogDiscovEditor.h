@@ -56,10 +56,10 @@ public:
     void stopAcquisition();
 
     /** Called when configuration is saved. Adds editors config to xml. */
-    void saveEditorParameters(XmlElement* xml);
+	void saveCustomParameters(XmlElement* xml);
 
     /** Called when configuration is loaded. Reads editors config from xml. */
-    void loadEditorParameters(XmlElement* xml);
+	void loadCustomParameters(XmlElement* xml);
 
 private:
 

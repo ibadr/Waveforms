@@ -34,6 +34,7 @@ AnalogDiscovManager::~AnalogDiscovManager()
 
 AnalogDiscovManager * AnalogDiscovManager::uniqueInst()
 {
+	// FIXME: make this instantiation thread-safe, depending on the threading library used in Open Ephys GUI
 	if (_inst == 0)
 	{
 		_inst = new AnalogDiscovManager();
@@ -56,13 +57,16 @@ bool AnalogDiscovManager::openDevice(int id)
 		return isSuccess;
 	}
 
+	int cDevice;
+	FDwfEnum(enumfilterDiscovery, &cDevice); // enumerate first to help with checking isInUse next
+
 	BOOL isInUse;
 	FDwfEnumDeviceIsOpened(id, &isInUse);
 	if (isInUse) {
 		CoreServices::sendStatusMessage("Device is already in use! Please close other programs that are using the selected device.");
 		return isSuccess;
 	}
-	isSuccess=FDwfDeviceOpen(id, &_hdwf);
+	isSuccess=FDwfDeviceOpen(id, &_hdwf)>0?true:false;
 	return isSuccess;
 }
 
@@ -93,6 +97,9 @@ bool AnalogDiscovManager::registerClientForDevice(int id)
 
 bool AnalogDiscovManager::unregisterClientForDevice(int id)
 {
+	if (_numClients == 0)
+		return true;
+
 	if (--_numClients == 0) // last client to use this device, close
 		return closeDevice(id);
 	else

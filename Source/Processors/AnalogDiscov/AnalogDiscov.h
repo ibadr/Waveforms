@@ -70,6 +70,8 @@ public:
 		return true;
 	}
 
+	void setDefaultSampleRate(float fs);
+	void setDefaultBitVolts(float bv);
 	float getDefaultSampleRate();
 	float getDefaultBitVolts();
 	float getBitVolts(Channel* chan);

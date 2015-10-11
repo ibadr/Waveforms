@@ -33,7 +33,8 @@ AnalogDiscov::AnalogDiscov()
 	_fs(10000.0f), _bv(950.57f), _rgdSamples(0)
 {
 	_manager = AnalogDiscovManager::uniqueInst();
-
+	// attempt to automatically open the first device, if available
+	setDeviceId(0);
 }
 
 AnalogDiscov::~AnalogDiscov()
@@ -45,6 +46,11 @@ AnalogDiscov::~AnalogDiscov()
 
 void AnalogDiscov::setDeviceId(int id)
 {
+	if (_devId != id)
+	{
+		// unregister the older device first
+		_manager->unregisterClientForDevice(id);
+	}
 	_devId = id; 
 
 	if (!_devOpen)
@@ -67,19 +73,20 @@ bool AnalogDiscov::enable()
 {
 	HDWF hdwf = _manager->currDeviceHdwf();
 	if (hdwf > 0) {
+		BOOL isSuccess = 0;
 		// set sample rate and filter
-		FDwfAnalogInFrequencySet(hdwf, getDefaultSampleRate());
+		isSuccess=FDwfAnalogInFrequencySet(hdwf, getDefaultSampleRate());
 		FILTER filter = filterAverage;
-		FDwfAnalogInChannelFilterSet(hdwf, -1, filter);
+		isSuccess=FDwfAnalogInChannelFilterSet(hdwf, -1, filter);
 
 		// get the maximum buffer size
-		FDwfAnalogInBufferSizeInfo(hdwf, NULL, &_cBufSamples);
+		isSuccess=FDwfAnalogInBufferSizeInfo(hdwf, NULL, &_cBufSamples);
 		_cBufSamples = _cBufSamples > 1024 ? 1024 : _cBufSamples; // max buffer size in open-ephys is 1024?
-		FDwfAnalogInBufferSizeSet(hdwf, _cBufSamples);
+		isSuccess=FDwfAnalogInBufferSizeSet(hdwf, _cBufSamples);
 
 		delete[] _rgdSamples;
 		_rgdSamples = new double[_cBufSamples];
-		return true;
+		return isSuccess>0 ? true:false;
 	}
 	else { return false; }
 }
@@ -134,6 +141,16 @@ AudioProcessorEditor* AnalogDiscov::createEditor()
 {
     editor = new AnalogDiscovEditor(this);
     return editor;
+}
+
+void AnalogDiscov::setDefaultSampleRate(float fs)
+{
+	_fs = fs;
+}
+
+void AnalogDiscov::setDefaultBitVolts(float bv)
+{
+	_bv = bv;
 }
 
 float AnalogDiscov::getDefaultSampleRate()

@@ -125,22 +125,40 @@ void AnalogDiscovEditor::comboBoxChanged(ComboBox* comboBox)
 
 void AnalogDiscovEditor::labelTextChanged(Label* label)
 {
+	if (label == _uVperUnitValue)
+	{
+		_node->setDefaultBitVolts(label->getText().getFloatValue());
+	}
+	else if (label == _sampleRateValue)
+	{
+		float v = label->getText().getFloatValue();
+		if (v < 1024) {
+			CoreServices::sendStatusMessage("Please set the sample rate to at least 1024 Hz!");
+			label->setText(String(_node->getDefaultSampleRate()), NotificationType::dontSendNotification);
+			return;
+		}
+		_node->setDefaultSampleRate(v);
+	}
 	return;
 }
 
-void AnalogDiscovEditor::saveEditorParameters(XmlElement* xmlNode)
+void AnalogDiscovEditor::saveCustomParameters(XmlElement* xmlNode)
 {
-    XmlElement* parameters = xmlNode->createNewChildElement("PARAMETERS");
+	xmlNode->setAttribute("Type", "AnalogDiscovEditor");
 
+    XmlElement* parameters = xmlNode->createNewChildElement("PARAMETERS");
+	parameters->setAttribute("SampleRate", _sampleRateValue->getText());
+	parameters->setAttribute("BitVolts", _uVperUnitValue->getText());
 }
 
-void AnalogDiscovEditor::loadEditorParameters(XmlElement* xmlNode)
+void AnalogDiscovEditor::loadCustomParameters(XmlElement* xmlNode)
 {
     forEachXmlChildElement(*xmlNode, subNode)
     {
         if (subNode->hasTagName("PARAMETERS"))
         {
-			;
+			_sampleRateValue->setText(subNode->getStringAttribute("SampleRate", "10000"), NotificationType::sendNotificationAsync);
+			_uVperUnitValue->setText(subNode->getStringAttribute("BitVolts", "1000"), NotificationType::sendNotificationAsync);
         }
     }
 }
