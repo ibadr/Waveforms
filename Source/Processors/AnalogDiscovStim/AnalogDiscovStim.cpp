@@ -46,13 +46,13 @@ bool AnalogDiscovStim::isReady()
 	BOOL ret;
 	ret=FDwfAnalogOutNodeEnableSet(hdwf, 0, AnalogOutNodeCarrier, true);
 	// set sine function
-	ret=FDwfAnalogOutNodeFunctionSet(hdwf, 0, AnalogOutNodeCarrier, funcSine);
-	// 80 Hz
-	ret=FDwfAnalogOutNodeFrequencySet(hdwf, 0, AnalogOutNodeCarrier, 80.0);
-	// 1.41V amplitude (1Vrms), 2.82V pk2pk
-	ret=FDwfAnalogOutNodeAmplitudeSet(hdwf, 0, AnalogOutNodeCarrier, 1.41);
-	// start signal generation
-	ret=FDwfAnalogOutConfigure(hdwf, 0, true);
+	ret = FDwfAnalogOutNodeFunctionSet(hdwf, 0, AnalogOutNodeCarrier, funcSquare);
+	// 1 kHz
+	ret=FDwfAnalogOutNodeFrequencySet(hdwf, 0, AnalogOutNodeCarrier, 1000.0);
+	// 0.5 V amplitude, 1 V pk2pk
+	ret=FDwfAnalogOutNodeAmplitudeSet(hdwf, 0, AnalogOutNodeCarrier, 0.5);
+	// run for only 5 ms each time
+	ret = FDwfAnalogOutRunSet(hdwf, 0, 5*1e-3);
 	return _isReady && ret>0? true:false;
 }
 
@@ -93,7 +93,11 @@ void AnalogDiscovStim::handleEvent(int eventType, MidiMessage& event, int /*samp
 
             if (isValid)
             {
-				; // do something
+				if (newSpike.channel == 0 && newSpike.sortedId == 1)
+				{
+					// run stim once
+					FDwfAnalogOutConfigure(_manager->currDeviceHdwf(), 0, true);
+				}
             }
         }
     }
