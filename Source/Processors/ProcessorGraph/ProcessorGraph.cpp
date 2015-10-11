@@ -45,6 +45,7 @@
 #include "../PulsePalOutput/PulsePalOutput.h"
 #include "../SerialInput/SerialInput.h"
 #include "../AnalogDiscov/AnalogDiscov.h"
+#include "../AnalogDiscovStim/AnalogDiscovStim.h"
 #include "../MessageCenter/MessageCenter.h"
 #include "../RecordControl/RecordControl.h"
 #include "../Splitter/Splitter.h"
@@ -683,6 +684,11 @@ GenericProcessor* ProcessorGraph::createProcessorFromDescription(String& descrip
 		{
 			std::cout << "Creating a PSTH output node." << std::endl;
 			processor = new PeriStimulusTimeHistogramNode();
+		}
+		else if (subProcessorType.equalsIgnoreCase("Analog Discov Stim"))
+		{
+			std::cout << "Creating AnalogDiscovStim node." << std::endl;
+			processor = new AnalogDiscovStim();
 		}
 
 		CoreServices::sendStatusMessage("New sink created.");

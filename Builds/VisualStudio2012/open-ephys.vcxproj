@@ -267,6 +267,7 @@
     <ClCompile Include="..\..\Source\AccessClass.cpp"/>
     <ClCompile Include="..\..\Source\Network\PracticalSocket.cpp"/>
     <ClCompile Include="..\..\Source\Audio\AudioComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Processors\AnalogDiscovStim\AnalogDiscovStim.cpp"/>
     <ClCompile Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.cpp"/>
     <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovManager.cpp"/>
     <ClCompile Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.cpp"/>
@@ -1518,6 +1519,7 @@
     <ClInclude Include="..\..\Source\AccessClass.h"/>
     <ClInclude Include="..\..\Source\Network\PracticalSocket.h"/>
     <ClInclude Include="..\..\Source\Audio\AudioComponent.h"/>
+    <ClInclude Include="..\..\Source\Processors\AnalogDiscovStim\AnalogDiscovStim.h"/>
     <ClInclude Include="..\..\Source\Processors\UnityProcessor\UnityProcessor.h"/>
     <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscovManager.h"/>
     <ClInclude Include="..\..\Source\Processors\AnalogDiscov\AnalogDiscov.h"/>
