@@ -169,11 +169,15 @@ float AnalogDiscov::getDefaultSampleRate()
 
 float AnalogDiscov::getDefaultBitVolts()
 {
-	return _bv;
+	return 1.0; // since data is saved in Int16 format, it's better to store the uV values as they are
 }
 
 float AnalogDiscov::getBitVolts(Channel* /*chan*/)
 {
+	return 1.0; // since data is saved in Int16 format, it's better to store the uV values as they are
+}
+
+float AnalogDiscov::getBitVoltsInteral() {
 	return _bv;
 }
 

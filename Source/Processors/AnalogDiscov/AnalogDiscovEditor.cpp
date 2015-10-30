@@ -76,7 +76,7 @@ void AnalogDiscovEditor::initEditor()
 	_sampleRateValue->setTooltip("Set the sample rate for the selected channels");
 	addAndMakeVisible(_sampleRateValue);
 
-	_uVperUnitValue = new Label("uV/unit label", String(_node->getDefaultBitVolts()));
+	_uVperUnitValue = new Label("uV/unit label", String(_node->getBitVoltsInteral()));
 	_uVperUnitValue->setBounds(100, 110, 50, 20);
 	_uVperUnitValue->setFont(Font("Default", 11, Font::plain));
 	_uVperUnitValue->setColour(Label::textColourId, Colours::white);

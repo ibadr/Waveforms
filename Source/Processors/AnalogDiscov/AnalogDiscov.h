@@ -75,6 +75,7 @@ public:
 	float getDefaultSampleRate();
 	float getDefaultBitVolts();
 	float getBitVolts(Channel* chan);
+	float getBitVoltsInteral(); // access to _bv for the editor
 	int getNumHeadstageOutputs();
 	//int getNumEventChannels();
 
