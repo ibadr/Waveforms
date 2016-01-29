@@ -61,7 +61,7 @@ void UnityProcessor::process(AudioSampleBuffer& buffer,
         float* bufPtr = buffer.getWritePointer(ch);
         for (int n = 0; n < nSamples; n++)
         {
-            *(bufPtr + n) = *(bufPtr + n);
+            bufPtr[n] = bufPtr[n];
         }
     }
     
