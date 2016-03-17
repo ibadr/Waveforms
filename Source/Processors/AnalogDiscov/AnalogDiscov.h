@@ -70,6 +70,7 @@ public:
 		return true;
 	}
 
+	void setNumChannels(int n);
 	void setDefaultSampleRate(float fs);
 	void setDefaultBitVolts(float bv);
 	float getDefaultSampleRate();
@@ -107,7 +108,8 @@ public:
 private:
 
 	int64 _timestamp;
-	int _currentNumChannels;
+	int _currentNumChannels; // actual number of channels from Analog Discovery Hardware
+	int _setNumChannels; // set number of channels, which can be more or less than actual number of channels (extra channels will be filled with zeros)
 	int _devId;
 	AnalogDiscovManager* _manager;
 	bool _devOpen;

@@ -29,7 +29,7 @@
 #include <stdlib.h>
 
 AnalogDiscov::AnalogDiscov()
-	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _devOpen(false), _isReady(false),
+	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _setNumChannels(1), _devOpen(false), _isReady(false),
 	_fs(10000.0f), _bv(950.57f), _rgdSamples(0)
 {
 	_manager = AnalogDiscovManager::uniqueInst();
@@ -62,6 +62,7 @@ void AnalogDiscov::setDeviceId(int id)
 		int cChannel;
 		FDwfAnalogInChannelCount(_manager->currDeviceHdwf(), &cChannel);
 		_currentNumChannels = cChannel;
+		_setNumChannels = _currentNumChannels;
 		// enable channels
 		for (int c = 0; c < cChannel; c++){
 			FDwfAnalogInChannelEnableSet(_manager->currDeviceHdwf(), c, true);
@@ -152,6 +153,11 @@ AudioProcessorEditor* AnalogDiscov::createEditor()
     return editor;
 }
 
+void AnalogDiscov::setNumChannels(int n)
+{
+	_setNumChannels = n;
+}
+
 void AnalogDiscov::setDefaultSampleRate(float fs)
 {
 	_fs = fs;
@@ -183,5 +189,5 @@ float AnalogDiscov::getBitVoltsInteral() {
 
 int AnalogDiscov::getNumHeadstageOutputs()
 {
-	return _currentNumChannels;
+	return _setNumChannels;
 }

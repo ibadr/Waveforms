@@ -67,9 +67,11 @@ private:
 	ScopedPointer<ComboBox> _deviceList;
     // Button that reloads device list
     ScopedPointer<UtilityButton> _refreshButton;
+	ScopedPointer<Label> _setChanNumLabel;
 	ScopedPointer<Label> _sampleRateLabel;
 	ScopedPointer<Label> _uVperUnitLabel;
 
+	ScopedPointer<Label> _setChanNumValue;
 	ScopedPointer<Label> _sampleRateValue;
 	ScopedPointer<Label> _uVperUnitValue;
 

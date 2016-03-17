@@ -33,7 +33,7 @@ AnalogDiscovEditor::AnalogDiscovEditor(AnalogDiscov* parentNode)
 {
     _node = parentNode;
 
-    desiredWidth = 175;
+    desiredWidth = 230;
 
 	initEditor();
 	buttonEvent(_refreshButton); // refresh after construction
@@ -48,11 +48,17 @@ void AnalogDiscovEditor::initEditor()
 	addAndMakeVisible(_deviceList);
 
 	// Add refresh button
-	_refreshButton = new UtilityButton("REFRESH", Font("Small Text", 10, Font::plain));
+	_refreshButton = new UtilityButton("REFRESH", Font(7, Font::plain));
 	_refreshButton->setRadius(3.0f);
-	_refreshButton->setBounds(85, 60, 65, 20);
+	_refreshButton->setBounds(165, 31, 50, 20);
 	_refreshButton->addListener(this);
 	addAndMakeVisible(_refreshButton);
+
+	_setChanNumLabel = new Label("num channel label", "Num chan:");
+	_setChanNumLabel->setBounds(10, 60, 80, 20);
+	_setChanNumLabel->setFont(Font("Small Text", 11, Font::plain));
+	_setChanNumLabel->setColour(Label::textColourId, Colours::darkgrey);
+	addAndMakeVisible(_setChanNumLabel);
 
 	_sampleRateLabel = new Label("sample rate label", "Sample rate:");
 	_sampleRateLabel->setBounds(10, 85, 80, 20);
@@ -65,6 +71,16 @@ void AnalogDiscovEditor::initEditor()
 	_uVperUnitLabel->setFont(Font("Small Text", 11, Font::plain));
 	_uVperUnitLabel->setColour(Label::textColourId, Colours::darkgrey);
 	addAndMakeVisible(_uVperUnitLabel);
+
+	_setChanNumValue = new Label("num channel value", String(_node->getNumHeadstageOutputs()));
+	_setChanNumValue->setBounds(100, 60, 50, 20);
+	_setChanNumValue->setFont(Font("Default", 11, Font::plain));
+	_setChanNumValue->setColour(Label::textColourId, Colours::white);
+	_setChanNumValue->setColour(Label::backgroundColourId, Colours::grey);
+	_setChanNumValue->setEditable(true);
+	_setChanNumValue->addListener(this);
+	_setChanNumValue->setTooltip("Set the number of channels of signal chain");
+	addAndMakeVisible(_setChanNumValue);
 
 	_sampleRateValue = new Label("sample rate value", String(_node->getDefaultSampleRate()));
 	_sampleRateValue->setBounds(100, 85, 50, 20);
@@ -94,6 +110,7 @@ void AnalogDiscovEditor::startAcquisition()
 	_refreshButton->setEnabled(false);
 	_uVperUnitValue->setEnabled(false);
 	_sampleRateValue->setEnabled(false);
+	_setChanNumValue->setEnabled(false);
     GenericEditor::startAcquisition();
 }
 
@@ -104,6 +121,7 @@ void AnalogDiscovEditor::stopAcquisition()
     _refreshButton->setEnabled(true);
 	_uVperUnitValue->setEnabled(true);
 	_sampleRateValue->setEnabled(true);
+	_setChanNumValue->setEnabled(true);
     GenericEditor::stopAcquisition();
 }
 
@@ -139,6 +157,11 @@ void AnalogDiscovEditor::labelTextChanged(Label* label)
 		}
 		_node->setDefaultSampleRate(v);
 	}
+	else if (label == _setChanNumValue)
+	{
+		int v = label->getText().getIntValue();
+		_node->setNumChannels(v);
+	}
 	return;
 }
 
@@ -149,6 +172,7 @@ void AnalogDiscovEditor::saveCustomParameters(XmlElement* xmlNode)
     XmlElement* parameters = xmlNode->createNewChildElement("PARAMETERS");
 	parameters->setAttribute("SampleRate", _sampleRateValue->getText());
 	parameters->setAttribute("BitVolts", _uVperUnitValue->getText());
+	parameters->setAttribute("NumChan", _setChanNumValue->getText());
 }
 
 void AnalogDiscovEditor::loadCustomParameters(XmlElement* xmlNode)
@@ -159,6 +183,7 @@ void AnalogDiscovEditor::loadCustomParameters(XmlElement* xmlNode)
         {
 			_sampleRateValue->setText(subNode->getStringAttribute("SampleRate", "10000"), NotificationType::sendNotificationAsync);
 			_uVperUnitValue->setText(subNode->getStringAttribute("BitVolts", "1000"), NotificationType::sendNotificationAsync);
+			_setChanNumValue->setText(subNode->getStringAttribute("NumChan", "1000"), NotificationType::sendNotificationAsync);
         }
     }
 }
