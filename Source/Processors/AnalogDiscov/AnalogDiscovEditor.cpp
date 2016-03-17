@@ -139,6 +139,7 @@ void AnalogDiscovEditor::buttonEvent(Button* /*button*/)
 void AnalogDiscovEditor::comboBoxChanged(ComboBox* comboBox)
 {
 	_node->setDeviceId(comboBox->getSelectedId()-1);
+	_setChanNumValue->setText(String(_node->getNumHeadstageOutputs()), NotificationType::dontSendNotification);
 }
 
 void AnalogDiscovEditor::labelTextChanged(Label* label)
