@@ -120,7 +120,6 @@ private:
 
 	STS _sts;
 	double* _rgdSamples;
-	int _cBufSamples;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AnalogDiscov);
 };

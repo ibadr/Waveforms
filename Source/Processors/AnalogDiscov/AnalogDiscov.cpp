@@ -81,13 +81,14 @@ bool AnalogDiscov::enable()
 		FILTER filter = filterAverage;
 		isSuccess=FDwfAnalogInChannelFilterSet(hdwf, -1, filter);
 
+		int cBufSamples;
 		// get the maximum buffer size
-		isSuccess=FDwfAnalogInBufferSizeInfo(hdwf, NULL, &_cBufSamples);
-		_cBufSamples = _cBufSamples > 1024 ? 1024 : _cBufSamples; // max buffer size in open-ephys is 1024?
-		isSuccess=FDwfAnalogInBufferSizeSet(hdwf, _cBufSamples);
+		isSuccess=FDwfAnalogInBufferSizeInfo(hdwf, NULL, &cBufSamples);
+		cBufSamples = cBufSamples > 2048 ? 2048 : cBufSamples; // max buffer size in open-ephys is 2048
+		isSuccess=FDwfAnalogInBufferSizeSet(hdwf, cBufSamples);
 
 		delete[] _rgdSamples;
-		_rgdSamples = new double[_cBufSamples];
+		_rgdSamples = new double[cBufSamples];
 
 		_isReady = isSuccess > 0 ? true : false;
 		return _isReady;
@@ -134,17 +135,20 @@ void AnalogDiscov::process(AudioSampleBuffer& buffer, MidiBuffer& events)
 		FDwfAnalogInStatus(hdwf, true, &_sts);
 	} while (_sts != stsDone);
 
+	// Only read the number of samples specifed by currently selected Open Ephys buffer size
+	int bufSamples = buffer.getNumSamples();
+
 	// get the samples for each channel
 	for (int ch = 0; ch < _currentNumChannels; ch++){
-		FDwfAnalogInStatusData(hdwf, ch, _rgdSamples, _cBufSamples);
+		FDwfAnalogInStatusData(hdwf, ch, _rgdSamples, bufSamples);
 		// forward the data to the outBuffer
 		float* outBuffer = buffer.getWritePointer(ch, 0);
-		for (int k = 0; k < _cBufSamples; k++)
+		for (int k = 0; k < bufSamples; k++)
 			*(outBuffer + k) = (float)_rgdSamples[k]*_bv;
 	}
-	_timestamp += _cBufSamples;
+	_timestamp += bufSamples;
 
-	setNumSamples(events, _cBufSamples);
+	setNumSamples(events, bufSamples);
 }
 
 AudioProcessorEditor* AnalogDiscov::createEditor()
