@@ -29,7 +29,7 @@
 #include <stdlib.h>
 
 AnalogDiscov::AnalogDiscov()
-	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _setNumChannels(1), _devOpen(false), _isReady(false),
+	: GenericProcessor("Analog Discovery"), _timestamp(0), _currentNumChannels(1), _setNumChannels(2), _devOpen(false), _isReady(false),
 	_fs(10000.0f), _bv(950.57f), _rgdSamples(0)
 {
 	_manager = AnalogDiscovManager::uniqueInst();
@@ -62,7 +62,6 @@ void AnalogDiscov::setDeviceId(int id)
 		int cChannel;
 		FDwfAnalogInChannelCount(_manager->currDeviceHdwf(), &cChannel);
 		_currentNumChannels = cChannel;
-		_setNumChannels = _currentNumChannels;
 		// enable channels
 		for (int c = 0; c < cChannel; c++){
 			FDwfAnalogInChannelEnableSet(_manager->currDeviceHdwf(), c, true);
@@ -141,10 +140,12 @@ void AnalogDiscov::process(AudioSampleBuffer& buffer, MidiBuffer& events)
 	// get the samples for each channel
 	for (int ch = 0; ch < _currentNumChannels; ch++){
 		FDwfAnalogInStatusData(hdwf, ch, _rgdSamples, bufSamples);
-		// forward the data to the outBuffer
-		float* outBuffer = buffer.getWritePointer(ch, 0);
-		for (int k = 0; k < bufSamples; k++)
-			*(outBuffer + k) = (float)_rgdSamples[k]*_bv;
+		if (ch < buffer.getNumChannels()) {
+			// forward the data to the outBuffer
+			float* outBuffer = buffer.getWritePointer(ch, 0);
+			for (int k = 0; k < bufSamples; k++)
+				*(outBuffer + k) = (float)_rgdSamples[k] * _bv;
+		}
 	}
 	_timestamp += bufSamples;
 
